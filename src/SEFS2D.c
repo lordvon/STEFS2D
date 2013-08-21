@@ -301,6 +301,11 @@ int main(void){
 	Dimension d;
 	fillDimension(&d);
 
+
+
+
+
+
 	preprocessing(&st,&g,&bc,&is,&ls,&in,&p,&n,&sw,&sa,&rk);
 	initialization(&g,&mm,&ls,&bc,&n,&st,&in,&is,&sl,&wd);
 	int mode=1;

@@ -1,15 +1,20 @@
-void mallocDimension(Dimension*d){
-	d->x=malloc(sizeof(BlockGridDimension)*d->tb);
-	d->v=malloc(sizeof(BlockGridDimension)*d->tb);
-	d->h=malloc(sizeof(BlockGridDimension)*d->tb);
-	d->c=malloc(sizeof(BlockGridDimension)*d->tb);
-	d->xside=malloc(sizeof(BlockBoundaries)*d->tb);
-	d->vside=malloc(sizeof(BlockBoundaries)*d->tb);
-	d->hside=malloc(sizeof(BlockBoundaries)*d->tb);
-	d->cside=malloc(sizeof(BlockBoundaries)*d->tb);
-	d->x0=malloc(sizeof(int)*d->tb);
-	d->e0=malloc(sizeof(int)*d->tb);
-	d->c0=malloc(sizeof(int)*d->tb);
+void mallocC(CSR*C,int totalEntries){
+	C->ci=malloc(sizeof(int)*totalEntries);
+	C->ri=malloc(sizeof(int)*totalEntries);
+	C->v=malloc(sizeof(double)*totalEntries);
+}
+void mallocDimension(Dimension*d,int totalblocks){
+	d->x=malloc(sizeof(BlockGridDimension)*totalblocks);
+	d->v=malloc(sizeof(BlockGridDimension)*totalblocks);
+	d->h=malloc(sizeof(BlockGridDimension)*totalblocks);
+	d->c=malloc(sizeof(BlockGridDimension)*totalblocks);
+	d->xside=malloc(sizeof(BlockBoundaries)*totalblocks);
+	d->vside=malloc(sizeof(BlockBoundaries)*totalblocks);
+	d->hside=malloc(sizeof(BlockBoundaries)*totalblocks);
+	d->cside=malloc(sizeof(BlockBoundaries)*totalblocks);
+	d->x0=malloc(sizeof(int)*totalblocks);
+	d->e0=malloc(sizeof(int)*totalblocks);
+	d->c0=malloc(sizeof(int)*totalblocks);
 }
 void freeDimension(Dimension*d){
 	free(d->x);
