@@ -5,9 +5,9 @@ void prepSymlap(SymLap*s,Grid*g,Interfaces*is){
 	int tb=g->totalblocks;
 	int tc=g->totalcells;
 	//Initialization.
-	initv(s->csr.v,s->csr.nn,0);
-	initvi(s->csr.ci,s->csr.nn,0);
-	initvi(s->csr.ri,s->csr.nn,0);
+	initv(s->csr.v,s->csr.n,0);
+	initvi(s->csr.ci,s->csr.n,0);
+	initvi(s->csr.ri,s->csr.n,0);
 	initv(s->b,tc,0);
 	for(b=0;b<tb;b++){
 		cd3=g->cdim[b][3];

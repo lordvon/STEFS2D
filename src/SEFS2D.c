@@ -173,7 +173,7 @@ typedef struct {//BoundaryConditions
 } BoundaryConditions;
 typedef struct {//CSR
 	//int nr,*p,*r;//number of rows, pointers, row indices for the pointers (length r)
-	int nn;//number of non-zeros
+	int n;//number of non-zeros / operations to perform.
 	int *ci,*ri;//column indices, row indices (length n)
 	double *v;//values (length n)
 	//combi 1 uses nn,v,ci,ri.
@@ -244,7 +244,8 @@ typedef struct {//Pressure
 #include "linearsystem/efs.h"
 #include "linearsystem/cmbops.h"
 #include "linearsystem/cg.h"
-#include "linearsystem/csr.h"
+
+#include "CSR/general.h"
 
 #include "invariantInterpolation/xx.h"
 #include "invariantInterpolation/uhh.h"
@@ -317,7 +318,7 @@ int main(void){
 		fillRhs(&g,&is,&st,&n,&ls);
 
 		ctmult(ls.rhs,ls.ctrhs,&g,&is,&ls);
-		efsCG(&ls,&n,&g,&is,&st,&bc);
+		efsCG(&ls,&n,&g,&is);
 		if(isnan(ls.residual)){ printf("Simulation diverged.\n"); break; }
 		cmult(ls.s,st.uvec,&g,&is,&ls);
 		if(sw.turbmod>0){ advanceSanu(&st,&n,&g); }

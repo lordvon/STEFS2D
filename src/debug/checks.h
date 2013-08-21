@@ -16,7 +16,7 @@ void compareCsrSlA(SymLap*slcsr,SymLap*slA){
 		printf("sl dims do not match!!!\n");
 		return;
 	}
-	for(i=0;i<slcsr->csr.nn;i++){
+	for(i=0;i<slcsr->csr.n;i++){
 		r=slcsr->csr.ri[i];
 		c=slcsr->csr.ci[i];
 		diff=slcsr->csr.v[i]-slA->A[r*dim+c];

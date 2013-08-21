@@ -490,16 +490,16 @@ void mallocSymlap(SymLap*s,Grid*g,Interfaces*is){
 	}
 	//csr
 	//s->csr.nr=tc;
-	s->csr.nn=is->totalinterfacepoints*3;//(is->totalinterfacepoints-is->totalinterfaces)*3-2*is->totalinterfaces;
-	s->csr.v=malloc(sizeof(double)*s->csr.nn);
-	s->csr.ci=malloc(sizeof(int)*s->csr.nn);
-	s->csr.ri=malloc(sizeof(int)*s->csr.nn);
+	s->csr.n=is->totalinterfacepoints*3;//(is->totalinterfacepoints-is->totalinterfaces)*3-2*is->totalinterfaces;
+	s->csr.v=malloc(sizeof(double)*s->csr.n);
+	s->csr.ci=malloc(sizeof(int)*s->csr.n);
+	s->csr.ri=malloc(sizeof(int)*s->csr.n);
 }
 void mallocCSR2(SymLap*s,int diagcorners){
-	s->csr2.nn=diagcorners;
-	s->csr2.ri=malloc(sizeof(int)*s->csr2.nn);
-	s->csr2.v=malloc(sizeof(double)*s->csr2.nn);
-	s->csr2.ci=malloc(sizeof(int)*s->csr2.nn);
+	s->csr2.n=diagcorners;
+	s->csr2.ri=malloc(sizeof(int)*s->csr2.n);
+	s->csr2.v=malloc(sizeof(double)*s->csr2.n);
+	s->csr2.ci=malloc(sizeof(int)*s->csr2.n);
 }
 void freeSymlap(SymLap*s,Grid*g){
 	int b;

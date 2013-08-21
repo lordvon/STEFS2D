@@ -756,7 +756,7 @@ void checkcsr(SymLap*sl){
 	CSR csr=sl->csr;
 	int i;
 	printf("v\t\tci\t\tri\n");
-	for(i=0;i<csr.nn;i++){
+	for(i=0;i<csr.n;i++){
 		printf("%.2e\t%d\t%d\n",csr.v[i],csr.ci[i],csr.ri[i]);
 	}
 }
