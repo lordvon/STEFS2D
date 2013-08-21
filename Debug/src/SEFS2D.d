@@ -3,7 +3,7 @@ src/SEFS2D.d: ../src/SEFS2D.c ../src/memory.h \
  ../src/other/state.h ../src/other/inputs.h \
  ../src/linearsystem/vectorops.h ../src/linearsystem/matrixops.h \
  ../src/linearsystem/efs.h ../src/linearsystem/cmbops.h \
- ../src/linearsystem/cg.h ../src/CSR/general.h \
+ ../src/linearsystem/cg.h ../src/CSR/general.h ../src/EFS/construction.h \
  ../src/invariantInterpolation/xx.h ../src/invariantInterpolation/uhh.h \
  ../src/invariantInterpolation/vvv.h ../src/invariantInterpolation/main.h \
  ../src/invariantToCartesian/main.h ../src/velocityDerivatives/diff.h \
@@ -40,6 +40,8 @@ src/SEFS2D.d: ../src/SEFS2D.c ../src/memory.h \
 ../src/linearsystem/cg.h:
 
 ../src/CSR/general.h:
+
+../src/EFS/construction.h:
 
 ../src/invariantInterpolation/xx.h:
 

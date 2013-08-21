@@ -172,11 +172,10 @@ typedef struct {//BoundaryConditions
 	InterfaceCorners ic;
 } BoundaryConditions;
 typedef struct {//CSR
-	//int nr,*p,*r;//number of rows, pointers, row indices for the pointers (length r)
+	//This method of storage is chosen because of the ease of performing a transposed matrix multiplication.
 	int n;//number of non-zeros / operations to perform.
 	int *ci,*ri;//column indices, row indices (length n)
 	double *v;//values (length n)
-	//combi 1 uses nn,v,ci,ri.
 } CSR;
 typedef struct {//SymLap
 	double *A;
@@ -226,6 +225,7 @@ typedef struct {//RungeKutta
 	int stages;
 	State*f;
 } RungeKutta;
+
 /*
 typedef struct {//Pressure
 	double **p;
@@ -246,6 +246,8 @@ typedef struct {//Pressure
 #include "linearsystem/cg.h"
 
 #include "CSR/general.h"
+
+#include "EFS/construction.h"
 
 #include "invariantInterpolation/xx.h"
 #include "invariantInterpolation/uhh.h"
@@ -300,6 +302,7 @@ int main(void){
 	SpalartAllmaras sa;
 	WallDistances wd;
 	RungeKutta rk;
+	//CSR C;
 
 	preprocessing(&st,&g,&bc,&is,&ls,&in,&p,&n,&sw,&sa,&rk);
 	initialization(&g,&mm,&ls,&bc,&n,&st,&in,&is,&sl,&wd);
