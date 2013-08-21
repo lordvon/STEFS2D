@@ -1,0 +1,67 @@
+0 in/blocks/h1.sefs	w i w i
+1 in/blocks/h2.sefs	w i i i
+2 in/blocks/h3.sefs	w i w i
+3 in/blocks/h4.sefs	w i w i
+4 in/blocks/h5.sefs	w i i i
+5 in/blocks/h6.sefs	w i w i
+6 in/blocks/left.sefs	i w f w		1 0
+7 in/blocks/right.sefs	i w z w
+#
+0 in/blocks/channel1.sefs	w z w f		1 0
+#
+0 in/blocks/left.sefs	w i w f		1 0
+1 in/blocks/right.sefs	w z w i
+#
+0 in/blocks/channel.sefs	w z w f		1 0
+#
+0 in/blocks/h1high.sefs		w i w i
+1 in/blocks/h2high.sefs		w i i i
+2 in/blocks/h3high.sefs		w i w i
+3 in/blocks/h4high.sefs		w i w i
+4 in/blocks/h5high.sefs		w i i i
+5 in/blocks/h6high.sefs		w i w i
+6 in/blocks/lefthigh.sefs	i w f w		1 0
+7 in/blocks/righthigh.sefs	i w z w
+#
+0 in/blocks/h1low.sefs	w i w i
+1 in/blocks/h2low.sefs	w i i i
+2 in/blocks/h3low.sefs	w i w i
+3 in/blocks/h4low.sefs	w i w i
+4 in/blocks/h5low.sefs	w i i i
+5 in/blocks/h6low.sefs	w i w i
+6 in/blocks/leftlow.sefs	i w f w		1 0
+7 in/blocks/rightlow.sefs	i w z w
+#
+0 in/blocks/h2low.sefs	w i w w
+1 in/blocks/h3low.sefs	w w w i
+#
+0 in/blocks/h4.sefs	w i w w
+1 in/blocks/h5.sefs	w w w i
+#
+0 in/blocks/h6.sefs	w i w w
+1 in/blocks/h1.sefs	w w w i
+#
+0 in/blocks/h3.sefs	w i w w
+1 in/blocks/h4.sefs	w i w i
+2 in/blocks/h5.sefs	w i w i
+3 in/blocks/h6.sefs	w w w i
+#
+0 in/blocks/h2.sefs	w i w w
+1 in/blocks/h3.sefs	w w w i
+#
+0 in/blocks/h1.sefs	w i w i
+1 in/blocks/h2.sefs	w i i i
+2 in/blocks/h3.sefs	w i w i
+3 in/blocks/h4.sefs	w i w i
+4 in/blocks/h5.sefs	w i i i
+5 in/blocks/h6.sefs	w i w i
+6 in/blocks/left.sefs	i w f w		1 0
+7 in/blocks/right.sefs	i w z w
+#
+0 in/blocks/one.sefs	w i i w
+1 in/blocks/two.sefs	w w i i
+2 in/blocks/three.sefs	i w f i 	10 0
+3 in/blocks/four.sefs	i i f w 	10 0
+#
+0	in/blocks/left.sefs		w i f w 	1 0
+1	in/blocks/right.sefs	w w f i		1 0

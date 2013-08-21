@@ -1,0 +1,9 @@
+dt			1e-3
+end			100e-3
+
+tol			1e-5
+maxiter		1000
+ptol		1e-5
+pmaxiter	1000
+
+fixedSanu	5e-5
