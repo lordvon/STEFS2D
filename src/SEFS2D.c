@@ -12,7 +12,7 @@ typedef struct {//BlockBoundaries
 	Boundary b[4];
 } BlockBoundaries;
 typedef struct {//BlockGridDimension
-	int i,j,k,n;//(i,j,k)-dimensions,total number
+	int i,j,k,n;//i,j,k dimensions,total number
 } BlockGridDimension;
 typedef struct {//Dimension
 	int tb;//total blocks
@@ -23,20 +23,14 @@ typedef struct {//Dimension
 	BlockGridDimension*v;
 	BlockGridDimension*h;
 	BlockGridDimension*c;
-	BlockBoundaries*sidexx;
-	BlockBoundaries*sidevv;
-	BlockBoundaries*sidehh;
-	BlockBoundaries*sidecc;
+	BlockBoundaries*xside;
+	BlockBoundaries*vside;
+	BlockBoundaries*hside;
+	BlockBoundaries*cside;
 	int *x0;//node starting indices for each block.
 	int *e0;//edge starting indices for each block.
 	int *c0;//cell starting indices for each block.
 } Dimension;
-typedef struct {//InvariantVelocity
-	double u,v;
-} InvariantVelocity;
-typedef struct {//CartesianVelocity
-	double u,v;
-} CartesianVelocity;
 typedef struct {//Property
 	double nu,rho,nuinv;
 } Property;
@@ -301,6 +295,9 @@ int main(void){
 	WallDistances wd;
 	RungeKutta rk;
 
+	Dimension d;
+	fillDimension(&d);
+
 	preprocessing(&st,&g,&bc,&is,&ls,&in,&p,&n,&sw,&sa,&rk);
 	initialization(&g,&mm,&ls,&bc,&n,&st,&in,&is,&sl,&wd);
 	int mode=1;
@@ -434,7 +431,7 @@ int main(void){
 	printf("It works: %d\n",ifromb[0][2][0]);
 	 */
 
-	freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk);
+	freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d);
 
 	printf("Finished!");
 	return EXIT_SUCCESS;
