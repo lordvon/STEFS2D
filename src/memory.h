@@ -1,3 +1,31 @@
+void mallocDimension(Dimension*d){
+	d->x=malloc(sizeof(BlockGridDimension)*d->tb);
+	d->v=malloc(sizeof(BlockGridDimension)*d->tb);
+	d->h=malloc(sizeof(BlockGridDimension)*d->tb);
+	d->c=malloc(sizeof(BlockGridDimension)*d->tb);
+	d->xside=malloc(sizeof(BlockBoundaries)*d->tb);
+	d->vside=malloc(sizeof(BlockBoundaries)*d->tb);
+	d->hside=malloc(sizeof(BlockBoundaries)*d->tb);
+	d->cside=malloc(sizeof(BlockBoundaries)*d->tb);
+	d->x0=malloc(sizeof(int)*d->tb);
+	d->e0=malloc(sizeof(int)*d->tb);
+	d->c0=malloc(sizeof(int)*d->tb);
+}
+void freeDimension(Dimension*d){
+	free(d->x);
+	free(d->v);
+	free(d->h);
+	free(d->c);
+	free(d->xside);
+	free(d->vside);
+	free(d->hside);
+	free(d->cside);
+	free(d->x0);
+	free(d->e0);
+	free(d->c0);
+
+}
+
 void freeGrid(Grid*g){
 	int b;
 	for(b=0;b<g->totalblocks;b++){
@@ -826,7 +854,7 @@ void freeRK(Grid*g,RungeKutta*rk){
 
 void freeAll(State*st,Numerics*n,Switches*sw,Grid*g,Initial*in,
 		Interfaces*is,LinearSystem*ls,Momentum*mm,BoundaryConditions*bc,
-		SymLap*sl,SpalartAllmaras*sa,WallDistances*wd,RungeKutta*rk){
+		SymLap*sl,SpalartAllmaras*sa,WallDistances*wd,RungeKutta*rk,Dimension*d){
 
 	freels(ls);
 
@@ -850,4 +878,5 @@ void freeAll(State*st,Numerics*n,Switches*sw,Grid*g,Initial*in,
 
 	freeGrid(g);
 
+	freeDimension(d);
 }
