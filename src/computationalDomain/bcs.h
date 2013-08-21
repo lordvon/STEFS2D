@@ -114,6 +114,7 @@ void fillBCSub(char bcid,int b,int s,BoundaryConditions*bc,int*counter){
 		break;
 	}
 }
+/*
 void fillBC(BoundaryConditions*bc,char*inputfile,int totalblocks){
 	int b,success,maxchars=200,counter[5];
 	char bc0,bc1,bc2,bc3,line[maxchars],filename[maxchars];
@@ -167,3 +168,4 @@ void countIC(Interfaces*is,BoundaryConditions*bc){
 		}
 	}
 }
+*/
