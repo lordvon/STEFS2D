@@ -49,6 +49,7 @@ void countNodes(char**blockFileNames,Dimension*d){
 		currentxstart+=dim[3];
 		fclose(file);
 	}
+	d->tn=currentxstart;
 }
 void inferEntityCounts(Dimension*d){
 	int b,te,tc;
@@ -64,9 +65,9 @@ void inferEntityCounts(Dimension*d){
 		d->c[b].k=1;
 		d->v[b].k=1;
 		d->h[b].k=1;
+		d->c[b].n=d->c[b].i*d->c[b].j*d->c[b].k;
 		d->v[b].n=d->v[b].i*d->v[b].j*d->v[b].k;
 		d->h[b].n=d->h[b].i*d->h[b].j*d->h[b].k;
-		d->c[b].n=d->c[b].i*d->c[b].j*d->c[b].k;
 
 		d->e0[b]=te;te+=d->v[b].n+d->h[b].n;
 		d->c0[b]=tc;tc+=d->c[b].n;
@@ -74,16 +75,41 @@ void inferEntityCounts(Dimension*d){
 	d->te=te;
 	d->tc=tc;
 }
+void fillSidesSub(BlockBoundaries*bo,int d0,int d3){
+	bo->b[0].st=0;
+	bo->b[0].en=d0-1;
+	bo->b[1].st=d0-1;
+	bo->b[1].en=d3-1;
+	bo->b[2].st=d3-d0;
+	bo->b[2].en=d3-1;
+	bo->b[3].st=0;
+	bo->b[3].en=d3-d0;
+	bo->b[0].iv=bo->b[2].iv=1;
+	bo->b[1].iv=bo->b[3].iv=d0;
+	bo->b[0].in=d0;
+	bo->b[1].in=-1;
+	bo->b[2].in=-d0;
+	bo->b[3].in=1;
+	bo->b[0].size=bo->b[2].size=d0;
+	bo->b[1].size=bo->b[3].size=d3/d0;
+}
+void fillSides(Dimension*d){
+	int b;
+	for(b=0;b<d->tb;b++){
+		fillSidesSub(&d->xside[b],d->x->i,d->x->n);
+		fillSidesSub(&d->vside[b],d->v->i,d->v->n);
+		fillSidesSub(&d->hside[b],d->h->i,d->h->n);
+		fillSidesSub(&d->cside[b],d->c->i,d->c->n);
+	}
+}
 void fillDimension(Dimension*d){
 	d->tb=countBlocks();
 	char**blockFileNames=charmalloc(d->tb,200);
+	mallocDimension(d);
 	fillBlockFileNames(blockFileNames);
 	countNodes(blockFileNames,d);
 	inferEntityCounts(d);
-
-
-
-
+	fillSides(d);
 	//free
 	int b;
 	for(b=0;b<d->tb;b++){
