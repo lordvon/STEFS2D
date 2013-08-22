@@ -341,7 +341,6 @@ int main(void){
 
 
 
-
 	/*
 	blockcc(sl.x,sl.cc,&g);cctoxxSL(sl.cc,wd.xx,&g,&bc,&is);
 	writeMultiBlockCustomSolution("out/phi.q",&g,wd.xx);
