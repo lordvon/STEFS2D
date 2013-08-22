@@ -33,6 +33,7 @@ void freeBC(BoundaryConditions*bc){
 }
 
 void mallocDimension(Dimension*d){
+	d->out=fopen("out/dimension.out","w");
 	d->x=malloc(sizeof(BlockGridDimension)*d->tb);
 	d->v=malloc(sizeof(BlockGridDimension)*d->tb);
 	d->h=malloc(sizeof(BlockGridDimension)*d->tb);
@@ -57,6 +58,7 @@ void freeDimension(Dimension*d){
 	free(d->x0);
 	free(d->e0);
 	free(d->c0);
+	fclose(d->out);
 }
 
 void freeGrid(Grid*g){

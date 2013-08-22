@@ -15,6 +15,7 @@ typedef struct {//BlockGridDimension
 	int i,j,k,n;//i,j,k dimensions,total number
 } BlockGridDimension;
 typedef struct {//Dimension
+	FILE*out;
 	int tb;//total blocks
 	int tn;//total nodes
 	int te;//total edges
@@ -301,13 +302,15 @@ int main(void){
 	WallDistances wd;
 	RungeKutta rk;
 
-	Dimension d;
-	fillDimension(&d);
-
 	preprocessing(&st,&g,&bc,&is,&ls,&in,&p,&n,&sw,&sa,&rk);
 	initialization(&g,&mm,&ls,&bc,&n,&st,&in,&is,&sl,&wd);
-	int mode=1;
 
+	Dimension d;
+	fillDimension(&d);
+	fillBCs(&bc,&d,&g);
+
+
+	int mode=1;
 	int i;
 	for(i=1;i<=n.end/n.dt;i++){
 		printf("Iteration %d: ",i);
@@ -437,7 +440,7 @@ int main(void){
 	printf("It works: %d\n",ifromb[0][2][0]);
 	 */
 
-	freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d);
+	//freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d);
 
 	printf("Finished!");
 	return EXIT_SUCCESS;
