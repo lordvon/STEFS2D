@@ -1,5 +1,5 @@
 dt			1e-3
-end			3e-3
+end			.1e-3
 
 tol			1e-5
 maxiter		1000
