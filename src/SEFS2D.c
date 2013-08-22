@@ -15,6 +15,7 @@ typedef struct {//BlockGridDimension
 	int i,j,k,n;//i,j,k dimensions,total number
 } BlockGridDimension;
 typedef struct {//Dimension
+	FILE*out;
 	int tb;//total blocks
 	int tn;//total nodes
 	int te;//total edges
@@ -146,24 +147,30 @@ typedef struct {//Momentum
 typedef struct {//BoundaryID
 	int b,s;//block,side
 } BoundaryID;
-typedef struct {//BC
-	int n;//total number of boundaries for this BC.
-	BoundaryID*id;
-} BC;
+typedef struct {
+	char id[4];//indexed by side.
+} BlockBCID;
+typedef struct {
+	int id[4];//indexed by side. returns block id if adjacent block present.
+} BlockID;
 typedef struct {//BoundaryConditions
 	FILE*out;
 	char **id;//bc id based on block and side. ( i.e. id[b][s] )
 	double **fv;//fixed values for each block. Currently, one fixed vector value per block. (i.e. bc->f[b][0,1] for x- and y- components)
 	int ***side;//side[block][side][start,interval,end]
-	BC w;//wall
-	BC f;//fixed
-	BC i;//interface
-	BC z;//zerogradient
-	BC s;//sliding
+	int wn,fn,in,zn,sn;//number of BoundaryIDs (boundaries with corresponding BC) present.
+	BoundaryID*w;//wall
+	BoundaryID*f;//fixed
+	BoundaryID*i;//interface
+	BoundaryID*z;//zerogradient
+	BoundaryID*s;//sliding
 	//The following contain corners at which 3 or 4 blocks are joined, and at which the corresponding boundary condition is of the highest precedence.
-	InterfaceCorners wc;
-	InterfaceCorners fc;
-	InterfaceCorners ic;
+	int wcn,fcn,icn;
+	CommonCorner*wc;
+	CommonCorner*fc;
+	CommonCorner*ic;
+	BlockBCID*bcid;
+	BlockID*bid;//connectivity information
 } BoundaryConditions;
 typedef struct {//CSR
 	//int nr,*p,*r;//number of rows, pointers, row indices for the pointers (length r)
@@ -295,13 +302,15 @@ int main(void){
 	WallDistances wd;
 	RungeKutta rk;
 
-	Dimension d;
-	fillDimension(&d);
-
 	preprocessing(&st,&g,&bc,&is,&ls,&in,&p,&n,&sw,&sa,&rk);
 	initialization(&g,&mm,&ls,&bc,&n,&st,&in,&is,&sl,&wd);
-	int mode=1;
 
+	Dimension d;
+	fillDimension(&d);
+	fillBCs(&bc,&d,&g);
+
+
+	int mode=1;
 	int i;
 	for(i=1;i<=n.end/n.dt;i++){
 		printf("Iteration %d: ",i);
@@ -431,7 +440,7 @@ int main(void){
 	printf("It works: %d\n",ifromb[0][2][0]);
 	 */
 
-	freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d);
+	//freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d);
 
 	printf("Finished!");
 	return EXIT_SUCCESS;

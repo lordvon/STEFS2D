@@ -31,6 +31,7 @@ void countNodes(char**blockFileNames,Dimension*d){
 	int b,success,dim[4],maxchars=200,currentxstart;
 	char line[maxchars];
 	currentxstart=0;
+	fprintf(d->out,"Read in vertex dimensions: \n");
 	for(b=0;b<d->tb;b++){
 		//readSingleBlockGrid(grid->blockNames[b],grid->xdim[b],grid->x[b],grid->y[b]);
 		FILE * file = fopen (blockFileNames[b], "rt");
@@ -45,6 +46,7 @@ void countNodes(char**blockFileNames,Dimension*d){
 		d->x[b].j=dim[1];
 		d->x[b].k=dim[2];
 		d->x[b].n=dim[3];
+		fprintf(d->out,"%d %d %d %d\n",dim[0],dim[1],dim[2],dim[3]);
 		d->x0[b]=currentxstart;
 		currentxstart+=dim[3];
 		fclose(file);
@@ -96,10 +98,10 @@ void fillSidesSub(BlockBoundaries*bo,int d0,int d3){
 void fillSides(Dimension*d){
 	int b;
 	for(b=0;b<d->tb;b++){
-		fillSidesSub(&d->xside[b],d->x->i,d->x->n);
-		fillSidesSub(&d->vside[b],d->v->i,d->v->n);
-		fillSidesSub(&d->hside[b],d->h->i,d->h->n);
-		fillSidesSub(&d->cside[b],d->c->i,d->c->n);
+		fillSidesSub(&d->xside[b],d->x[b].i,d->x[b].n);
+		fillSidesSub(&d->vside[b],d->v[b].i,d->v[b].n);
+		fillSidesSub(&d->hside[b],d->h[b].i,d->h[b].n);
+		fillSidesSub(&d->cside[b],d->c[b].i,d->c[b].n);
 	}
 }
 void fillDimension(Dimension*d){
