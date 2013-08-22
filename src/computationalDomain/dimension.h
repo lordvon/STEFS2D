@@ -107,7 +107,7 @@ void fillSides(Dimension*d){
 void fillDimension(Dimension*d){
 	d->tb=countBlocks();
 	char**blockFileNames=charmalloc(d->tb,200);
-	mallocDimension(d,d->tb);
+	mallocDimension(d);
 	fillBlockFileNames(blockFileNames);
 	countNodes(blockFileNames,d);
 	inferEntityCounts(d);

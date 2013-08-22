@@ -248,6 +248,8 @@ typedef struct {//Pressure
 
 #include "CSR/general.h"
 
+#include "EFS/construction.h"
+
 #include "invariantInterpolation/xx.h"
 #include "invariantInterpolation/uhh.h"
 #include "invariantInterpolation/vvv.h"
