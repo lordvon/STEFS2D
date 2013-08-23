@@ -1,4 +1,17 @@
-
+void mallocEFS(EFS*efs,int dim){
+	efs->r=malloc(sizeof(double)*dim);
+	efs->d=malloc(sizeof(double)*dim);
+	efs->q=malloc(sizeof(double)*dim);
+	efs->uu=malloc(sizeof(double)*dim);
+	efs->diff=malloc(sizeof(double)*dim);
+}
+void freeEFS(EFS*efs){
+	free(efs->r);
+	free(efs->d);
+	free(efs->q);
+	free(efs->uu);
+	free(efs->diff);
+}
 void mallocC(CSR*C,int totalEntries){
 	C->ci=malloc(sizeof(int)*totalEntries);
 	C->ri=malloc(sizeof(int)*totalEntries);
@@ -900,7 +913,7 @@ void freeRK(Grid*g,RungeKutta*rk){
 void freeAll(State*st,Numerics*n,Switches*sw,Grid*g,Initial*in,
 		Interfaces*is,LinearSystem*ls,Momentum*mm,BoundaryConditions*bc,
 		SymLap*sl,SpalartAllmaras*sa,WallDistances*wd,RungeKutta*rk,Dimension*d,
-		CSR*C){
+		CSR*C,EFS*efs){
 
 	freels(ls);
 
@@ -929,4 +942,6 @@ void freeAll(State*st,Numerics*n,Switches*sw,Grid*g,Initial*in,
 	freeDimension(d);
 
 	freeC(C);
+
+	freeEFS(efs);
 }
