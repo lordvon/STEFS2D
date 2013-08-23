@@ -147,10 +147,10 @@ typedef struct {//Momentum
 typedef struct {//BoundaryID
 	int b,s;//block,side
 } BoundaryID;
-typedef struct {
+typedef struct {//BlockBCID
 	char id[4];//indexed by side.
 } BlockBCID;
-typedef struct {
+typedef struct {//BlockID
 	int id[4];//indexed by side. returns block id if adjacent block present.
 } BlockID;
 typedef struct {//BoundaryConditions
@@ -227,6 +227,12 @@ typedef struct {//RungeKutta
 	int stages;
 	State*f;
 } RungeKutta;
+typedef struct {//EFS
+	//Intermediate variables for Conjugate Gradients iterations.
+	double*r,*d,*q,*uu,*diff,residualTolerance;
+	int totalEdges,totalNodes,maxIterations,refresh;
+	CSR*C;
+} EFS;
 /*
 typedef struct {//Pressure
 	double **p;
@@ -234,6 +240,8 @@ typedef struct {//Pressure
  */
 
 #include "memory.h"
+
+#include "basicMath/vector.h"
 
 #include "other/datastructures.h"
 #include "other/auxmath.h"
@@ -247,6 +255,10 @@ typedef struct {//Pressure
 #include "linearsystem/cg.h"
 
 #include "CSR/general.h"
+
+#include "EFS/construction.h"
+#include "EFS/matrixMultiplication.h"
+#include "EFS/CG.h"
 
 #include "invariantInterpolation/xx.h"
 #include "invariantInterpolation/uhh.h"
@@ -309,6 +321,17 @@ int main(void){
 	fillDimension(&d);
 	fillBCs(&bc,&d,&g);
 
+	CSR C;
+	fillC(&C,&d,&bc);
+
+	EFS efs;
+	efs.totalEdges=d.te;
+	efs.totalNodes=d.tn;
+	efs.maxIterations=n.maxiter;
+	efs.residualTolerance=n.tol;
+	efs.refresh=50;
+	efs.C=&C;
+	mallocEFS(&efs,efs.totalNodes);
 
 	int mode=1;
 	int i;
@@ -332,12 +355,13 @@ int main(void){
 	}
 
 	writeMultiBlockGrid(&g,"out/grid.xyz");
-	writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls);
-	writeMultiBlockCustomSolution("out/nutxx.q",&g,mm.nutxx);
-
-	writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
-	//writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
-	//writeMultiBlockCustomSolution("out/vxx.q",&g,mm.vxx);
+	if(i>1){
+		writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls);
+		writeMultiBlockCustomSolution("out/nutxx.q",&g,mm.nutxx);
+		writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
+		//writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
+		//writeMultiBlockCustomSolution("out/vxx.q",&g,mm.vxx);
+	}
 
 
 
@@ -439,7 +463,7 @@ int main(void){
 	printf("It works: %d\n",ifromb[0][2][0]);
 	 */
 
-	//freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d);
+	freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d,&C,&efs);
 
 	printf("Finished!");
 	return EXIT_SUCCESS;

@@ -28,8 +28,8 @@ void slmultCSR(double*x,double*b,SymLap*s,Grid*g,Interfaces*is){
 		symmdiagmult(s->d3[block],x,b,cd3-cd0,	cd0,cs);
 		symmdiagmult(s->d4[block],x,b,cd3-cd0-1,cd0+1,cs);
 	}
-	csrmult1symmetric(&s->csr,x,b);
-	csrmult1symmetric(&s->csr2,x,b);
+	csrSymmetric(&s->csr,x,b);
+	csrSymmetric(&s->csr2,x,b);
 }
 void slCG(SymLap* sl,LinearSystem*ls,Numerics*n,Grid*g,Interfaces*is){
 	//ls->s evolves. Its current value is the starting guess.

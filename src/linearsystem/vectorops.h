@@ -20,14 +20,6 @@ void initv(double*vec,int len,double val){
 		vec[i]=val;
 	}
 }
-double dot(double * a, double * b, int l){
-	int i;
-	double tot=0;
-	for(i=0;i<l;i++){
-		tot+=a[i]*b[i];
-	}
-	return tot;
-}
 void a_plus_b_eq_c(double * a, double * b, double * c, double asign, double bsign, int length){
 	int i;
 	for(i=0;i<length;i++){

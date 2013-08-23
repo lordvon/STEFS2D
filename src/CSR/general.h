@@ -1,12 +1,19 @@
-void csrmult1(CSR*csr,double*x,double*b){
-	//Assumes b already contains valuable information.
+void csr(CSR*csr,double*x,double*b){
+	//Adds on to b.
 	int i;
 	for(i=0;i<csr->n;i++){
 		b[csr->ri[i]]+=csr->v[i]*x[csr->ci[i]];
 	}
 }
-void csrmult1symmetric(CSR*csr,double*x,double*b){
-	//Assumes b already contains valuable information.
+void csrTranspose(CSR*csr,double*x,double*b){
+	//Adds on to b.
+	int i;
+	for(i=0;i<csr->n;i++){
+		b[csr->ci[i]]+=csr->v[i]*x[csr->ri[i]];
+	}
+}
+void csrSymmetric(CSR*csr,double*x,double*b){
+	//Adds on to b.
 	int i;
 	int row,col;
 	for(i=0;i<csr->n;i++){
