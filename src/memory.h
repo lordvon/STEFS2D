@@ -114,7 +114,7 @@ void mallocMomentum(State* s,Grid* grid,Momentum* mm,Interfaces*is){
 	int b;
 	int vd3,hd3,cd3,xd3;
 	mm->out=fopen("out/momentum.out","w");
-	int uvecsize=grid->totaledges+is->totalinterfacepoints;
+	int uvecsize=grid->totaledges;
 	s->uvec=malloc(uvecsize*sizeof(double));
 	s->u=malloc(grid->totalblocks*sizeof(double*));
 	s->v=malloc(grid->totalblocks*sizeof(double*));

@@ -4,7 +4,7 @@
 3 in/blocks/h4.sefs	w i w i
 4 in/blocks/h5.sefs	w i i i
 5 in/blocks/h6.sefs	w i w i
-6 in/blocks/left.sefs	i w f w		1 0
+6 in/blocks/left.sefs	i w f w		10 0
 7 in/blocks/right.sefs	i w z w
 #
 0 in/blocks/channel1.sefs	w z w f		1 0

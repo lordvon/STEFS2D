@@ -31,9 +31,9 @@ void invariantTimeDerivative(Grid* g,Momentum* mm,State* s){
 void fillTimeDerivative(State*st,
 		Grid*g,BoundaryConditions*bc,Interfaces*is,WallDistances*wd,
 		Momentum*mm,SpalartAllmaras*sa,
-		Property*p,Switches*sw,Numerics*n){
+		Property*p,Switches*sw,Numerics*n,Dimension*d){
 	//Calculates ut,vt,sanut based on the u,v,sanu in State*st.
-	interpolateState(st,mm,g,is,bc);
+	interpolateState(st,mm,g,is,bc,d);
 	cartesianConvert(st,g,mm);
 	cartesianDerivatives(g,mm,is);
 	convection(g,mm,bc,is);
@@ -46,7 +46,7 @@ void fillTimeDerivative(State*st,
 }
 void fillRhs(Grid*g,Interfaces*is,State*s,Numerics*n,LinearSystem*ls){
 	//Adds time derivative term to rhs.
-	int b,vi,hi,vd3,hd3,ip,es;
+	int b,vi,hi,vd3,hd3,es;
 	//Assign to RHS.
 	for(b=0;b<g->totalblocks;b++){
 		vd3=g->vdim[b][3];
@@ -59,9 +59,12 @@ void fillRhs(Grid*g,Interfaces*is,State*s,Numerics*n,LinearSystem*ls){
 			ls->rhs[es+vd3+hi]=s->v[b][hi]+n->dt*s->vt[b][hi];
 		}
 	}
+	/*
 	//printf("Last edge counted: %d\nTotal edges: %d\n",es+vd3+hi,g->totaledges);
+	int ip;
 	for(ip=0;ip<is->totalinterfacepoints;ip++){
 		ls->rhs[g->totaledges+ip]=0;
 	}
 	//printf("Last interface row: %d\nTotal rows: %d\n",g->totaledges+ip,ls->crows);
+	*/
 }

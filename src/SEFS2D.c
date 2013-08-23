@@ -37,7 +37,7 @@ typedef struct {//Property
 } Property;
 typedef struct {//State
 	double **u,**v,**sanu;//the invariant velocity components u and v are actually pointers to appropriate locations in one contiguous vector that is used in the linear system solve.
-	double *uvec;//to be used in the linear system. contains room for all velocity components and interface stitching relations. **u and **v point to locations within this vector.
+	double *uvec;//to be used in the linear system. contains room for all velocity components. **u and **v point to locations within this vector.
 	//Time derivatives
 	double **ut,**vt,**sanut;
 } State;
@@ -343,9 +343,9 @@ int main(void){
 		enforceInvariantBoundary(&st,&g,&bc);
 
 		if(mode){
-			RK3(&st,&rk,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n);
+			RK3(&st,&rk,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n,&d);
 		} else {
-			fillTimeDerivative(&st,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n);
+			fillTimeDerivative(&st,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n,&d);
 		}
 		fillRhs(&g,&is,&st,&n,&ls);
 
@@ -357,7 +357,7 @@ int main(void){
 
 	writeMultiBlockGrid(&g,"out/grid.xyz");
 	if(i>1){
-		writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls);
+		writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls,&d);
 		writeMultiBlockCustomSolution("out/nutxx.q",&g,mm.nutxx);
 		writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
 		//writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);

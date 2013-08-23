@@ -40,9 +40,9 @@ void initialization(Grid*g,Momentum*mm,LinearSystem*ls,BoundaryConditions*bc,
 	initWd(sl,g,bc,is,ls,n,wd);
 }
 void interpolateState(State* s,Momentum* mm,Grid* g,
-		Interfaces* is,BoundaryConditions* bc){
+		Interfaces* is,BoundaryConditions* bc,Dimension*d){
 	fillcc(s,mm,g);
-	fillxx(s,mm,g,bc,is);
+	fillxx(s,mm,g,bc,is,d);
 	filluhh(s,g,mm,bc,is);
 	fillvvv(s,g,mm,bc,is);
 }

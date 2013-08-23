@@ -22,13 +22,13 @@ void subWriteSoln(FILE *file,double *soln,int b,Grid* g){
 	}
 }
 void writeMultiBlockStateSolution(char *name,Grid* g,State*s,Momentum* mm,
-		Interfaces* is,BoundaryConditions* bc,LinearSystem* ls){
+		Interfaces* is,BoundaryConditions* bc,LinearSystem* ls,Dimension*d){
 	//Writes out formatted (ASCII) solution in whole, multi-block PLOT3D format.
 	FILE * file = fopen(name, "w");
 	int b;
 	//first convert latest state to cartesian form.
 	//update(s,g,ls,bc);
-	fillxx(s,mm,g,bc,is);
+	fillxx(s,mm,g,bc,is,d);
 	fillCartxx(g,mm);
 	//Information headers.
 	fprintf(file,"%d\n",g->totalblocks);
