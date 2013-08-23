@@ -1,9 +1,9 @@
-void mallocEFS(EFS*efs,int dim){
-	efs->r=malloc(sizeof(double)*dim);
-	efs->d=malloc(sizeof(double)*dim);
-	efs->q=malloc(sizeof(double)*dim);
-	efs->uu=malloc(sizeof(double)*dim);
-	efs->diff=malloc(sizeof(double)*dim);
+void mallocEFS(EFS*efs){
+	efs->r=malloc(sizeof(double)*efs->totalNodes);
+	efs->d=malloc(sizeof(double)*efs->totalNodes);
+	efs->q=malloc(sizeof(double)*efs->totalNodes);
+	efs->uu=malloc(sizeof(double)*efs->totalEdges);
+	efs->diff=malloc(sizeof(double)*efs->totalEdges);
 }
 void freeEFS(EFS*efs){
 	free(efs->r);
