@@ -277,6 +277,19 @@ void countAndIdentifyCommonCorners(BoundaryConditions*bc,int totalblocks){
 			for(b=0;b<4;b++){ bc->wc[c].block[b]=wc[c][b]; }
 		}
 	}
+	//free
+	for(c=0;c<wcn;c++){
+		free(wc[c]);
+	}
+	for(c=0;c<fcn;c++){
+		free(fc[c]);
+	}
+	for(c=0;c<icn;c++){
+		free(ic[c]);
+	}
+	free(wc);
+	free(fc);
+	free(ic);
 }
 void fillBCs(BoundaryConditions*bc,Dimension*d,Grid*g){
 	mallocBC1(bc,d->tb);

@@ -4,6 +4,11 @@ void mallocC(CSR*C,int totalEntries){
 	C->ri=malloc(sizeof(int)*totalEntries);
 	C->v=malloc(sizeof(double)*totalEntries);
 }
+void freeC(CSR*C){
+	free(C->ci);
+	free(C->ri);
+	free(C->v);
+}
 void mallocBC1(BoundaryConditions*bc,int totalblocks){
 	bc->out=fopen("out/bc.out","w");
 	bc->bcid=malloc(totalblocks*sizeof(BlockBCID));
@@ -894,7 +899,8 @@ void freeRK(Grid*g,RungeKutta*rk){
 
 void freeAll(State*st,Numerics*n,Switches*sw,Grid*g,Initial*in,
 		Interfaces*is,LinearSystem*ls,Momentum*mm,BoundaryConditions*bc,
-		SymLap*sl,SpalartAllmaras*sa,WallDistances*wd,RungeKutta*rk,Dimension*d){
+		SymLap*sl,SpalartAllmaras*sa,WallDistances*wd,RungeKutta*rk,Dimension*d,
+		CSR*C){
 
 	freels(ls);
 
@@ -921,4 +927,6 @@ void freeAll(State*st,Numerics*n,Switches*sw,Grid*g,Initial*in,
 	freeBC(bc);
 
 	freeDimension(d);
+
+	freeC(C);
 }

@@ -336,12 +336,13 @@ int main(void){
 	}
 
 	writeMultiBlockGrid(&g,"out/grid.xyz");
-	writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls);
-	writeMultiBlockCustomSolution("out/nutxx.q",&g,mm.nutxx);
-
-	writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
-	//writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
-	//writeMultiBlockCustomSolution("out/vxx.q",&g,mm.vxx);
+	if(i>1){
+		writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls);
+		writeMultiBlockCustomSolution("out/nutxx.q",&g,mm.nutxx);
+		writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
+		//writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
+		//writeMultiBlockCustomSolution("out/vxx.q",&g,mm.vxx);
+	}
 
 
 
@@ -443,7 +444,7 @@ int main(void){
 	printf("It works: %d\n",ifromb[0][2][0]);
 	 */
 
-	//freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d);
+	freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d,&C);
 
 	printf("Finished!");
 	return EXIT_SUCCESS;
