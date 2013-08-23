@@ -311,6 +311,8 @@ int main(void){
 	fillDimension(&d);
 	fillBCs(&bc,&d,&g);
 
+	CSR C;
+	fillC(&C,&d,&bc);
 
 	int mode=1;
 	int i;
