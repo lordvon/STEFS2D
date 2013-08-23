@@ -1,13 +1,15 @@
-void csr(CSR*csr,double*x,double*b){
+void csr(CSR*csr,double*x,double*b,int length){
 	//Adds on to b.
 	int i;
+	initializeVector(b,length,0);
 	for(i=0;i<csr->n;i++){
 		b[csr->ri[i]]+=csr->v[i]*x[csr->ci[i]];
 	}
 }
-void csrTranspose(CSR*csr,double*x,double*b){
+void csrTranspose(CSR*csr,double*x,double*b,int length){
 	//Adds on to b.
 	int i;
+	initializeVector(b,length,0);
 	for(i=0;i<csr->n;i++){
 		b[csr->ci[i]]+=csr->v[i]*x[csr->ri[i]];
 	}
