@@ -31,14 +31,14 @@ void invariantTimeDerivative(Grid* g,Momentum* mm,State* s){
 void fillTimeDerivative(State*st,
 		Grid*g,BoundaryConditions*bc,Interfaces*is,WallDistances*wd,
 		Momentum*mm,SpalartAllmaras*sa,
-		Property*p,Switches*sw,Numerics*n){
+		Property*p,Switches*sw,Numerics*n,Dimension*d){
 	//Calculates ut,vt,sanut based on the u,v,sanu in State*st.
 	interpolateState(st,mm,g,is,bc);
 	cartesianConvert(st,g,mm);
 	cartesianDerivatives(g,mm,is);
 	convection(g,mm,bc,is);
 	if(sw->turbmod>0){
-		computeSanut(st,sa,p,g,is,mm,wd->cc);
+		computeSanut(st,sa,p,g,is,mm,d,bc,wd->cc);
 		updateNut(st,sa,g,p,mm,bc,is);
 	}
 	viscosity(p,g,mm,bc,is);

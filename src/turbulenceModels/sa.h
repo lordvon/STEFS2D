@@ -246,7 +246,7 @@ void fillDissipation(SpalartAllmaras*sa,Grid*g){
 		}
 	}
 }
-void fillAdvectionCD(SpalartAllmaras*sa,Grid*g,Momentum*mm){
+void fillAdvection(SpalartAllmaras*sa,Grid*g,Momentum*mm){
 	//CD: central difference.
 	int b,cd3,ci;
 	for(b=0;b<g->totalblocks;b++){
@@ -258,11 +258,14 @@ void fillAdvectionCD(SpalartAllmaras*sa,Grid*g,Momentum*mm){
 		}
 	}
 }
-void computeSanut(State*s,SpalartAllmaras*sa,Property*p,Grid*g,Interfaces*is,Momentum*mm,
+void computeSanut(State*s,SpalartAllmaras*sa,Property*p,Grid*g,Interfaces*is,
+		Momentum*mm,
+		Dimension*d,BoundaryConditions*bc,
 		double**wd){
 	//assumes cart derivatives are updated.
 	//spatial derivatives of sanu.
-	CentralDiffCcField(is,g,sa->bcid,sa->fixed,s->sanu,sa->sanuxi,sa->sanueta);
+	//CentralDiffCcField(is,g,sa->bcid,sa->fixed,s->sanu,sa->sanuxi,sa->sanueta);
+	upwindCcField(d,mm,bc,sa->fixed,s->sanu,sa->sanuxi,sa->sanueta);
 	fillCartDerivativeCc(g,sa->sanux,sa->sanuy,sa->sanuxi,sa->sanueta);
 	//fill sa terms.
 	fillChi(s,sa,p,g);
@@ -279,7 +282,7 @@ void computeSanut(State*s,SpalartAllmaras*sa,Property*p,Grid*g,Interfaces*is,Mom
 	fillWallDestruction(s,sa,g,wd);
 	fillDissTerms(s,sa,g,p,is);
 	fillDissipation(sa,g);
-	fillAdvectionCD(sa,g,mm);
+	fillAdvection(sa,g,mm);
 	//compute time derivative.
 	int b,cd3,ci;
 	for(b=0;b<g->totalblocks;b++){

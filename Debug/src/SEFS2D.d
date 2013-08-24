@@ -9,7 +9,9 @@ src/SEFS2D.d: ../src/SEFS2D.c ../src/memory.h ../src/basicMath/vector.h \
  ../src/invariantInterpolation/vvv.h ../src/invariantInterpolation/main.h \
  ../src/invariantToCartesian/main.h ../src/velocityDerivatives/diff.h \
  ../src/velocityDerivatives/main.h ../src/finiteVolume/convective.h \
- ../src/finiteVolume/viscous.h ../src/finiteDifference/turb.h \
+ ../src/finiteVolume/viscous.h \
+ ../src/finiteDifference/centralDifferenceCC.h \
+ ../src/finiteDifference/upwindCC.h \
  ../src/computationalDomain/dimension.h ../src/computationalDomain/grid.h \
  ../src/computationalDomain/interface.h \
  ../src/computationalDomain/transformation.h \
@@ -68,7 +70,9 @@ src/SEFS2D.d: ../src/SEFS2D.c ../src/memory.h ../src/basicMath/vector.h \
 
 ../src/finiteVolume/viscous.h:
 
-../src/finiteDifference/turb.h:
+../src/finiteDifference/centralDifferenceCC.h:
+
+../src/finiteDifference/upwindCC.h:
 
 ../src/computationalDomain/dimension.h:
 
