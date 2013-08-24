@@ -1,6 +1,6 @@
 void RK3(State*s0,RungeKutta*rk,
 		Grid*g,BoundaryConditions*bc,Interfaces*is,WallDistances*wd,Momentum*mm,
-		SpalartAllmaras*sa,Property*p,Switches*sw,Numerics*n){
+		SpalartAllmaras*sa,Property*p,Switches*sw,Numerics*n,Dimension*d){
 	/* Takes u,v,sanu in s0 and fills the time derivatives using RK3.
 	Butcher tableau:
 	0		|	0
@@ -8,7 +8,7 @@ void RK3(State*s0,RungeKutta*rk,
 	0.5		|	0.25	0.25
 			|	0		-1		2
 	*/
-	fillTimeDerivative(s0,g,bc,is,wd,mm,sa,p,sw,n);
+	fillTimeDerivative(s0,g,bc,is,wd,mm,sa,p,sw,n,d);
 	int b,vi,hi,ci,vd3,cd3,hd3;
 	double a1,a2;
 	a1=0.5;a2=0.25;
@@ -29,7 +29,7 @@ void RK3(State*s0,RungeKutta*rk,
 					a1*n->dt*s0->sanut[b][ci];
 		}
 	}
-	fillTimeDerivative(&rk->f[0],g,bc,is,wd,mm,sa,p,sw,n);
+	fillTimeDerivative(&rk->f[0],g,bc,is,wd,mm,sa,p,sw,n,d);
 	for(b=0;b<g->totalblocks;b++){
 		cd3=g->cdim[b][3];
 		vd3=g->vdim[b][3];
@@ -50,7 +50,7 @@ void RK3(State*s0,RungeKutta*rk,
 								rk->f[0].sanut[b][ci]);
 		}
 	}
-	fillTimeDerivative(&rk->f[1],g,bc,is,wd,mm,sa,p,sw,n);
+	fillTimeDerivative(&rk->f[1],g,bc,is,wd,mm,sa,p,sw,n,d);
 	//Replace s0 derivatives with final values.
 	for(b=0;b<g->totalblocks;b++){
 		cd3=g->cdim[b][3];

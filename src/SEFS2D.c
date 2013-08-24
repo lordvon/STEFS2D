@@ -273,7 +273,8 @@ typedef struct {//Pressure
 #include "finiteVolume/convective.h"
 #include "finiteVolume/viscous.h"
 
-#include "finiteDifference/turb.h"
+#include "finiteDifference/centralDifferenceCC.h"
+#include "finiteDifference/upwindCC.h"
 
 #include "computationalDomain/dimension.h"
 #include "computationalDomain/grid.h"
@@ -331,7 +332,7 @@ int main(void){
 	efs.residualTolerance=n.tol;
 	efs.refresh=50;
 	efs.C=&C;
-	mallocEFS(&efs,efs.totalNodes);
+	mallocEFS(&efs);
 
 	int mode=1;
 	int i;
@@ -340,9 +341,9 @@ int main(void){
 		enforceInvariantBoundary(&st,&g,&bc);
 
 		if(mode){
-			RK3(&st,&rk,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n);
+			RK3(&st,&rk,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n,&d);
 		} else {
-			fillTimeDerivative(&st,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n);
+			fillTimeDerivative(&st,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n,&d);
 		}
 		fillRhs(&g,&is,&st,&n,&ls);
 
