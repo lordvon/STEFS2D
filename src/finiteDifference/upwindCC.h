@@ -76,7 +76,7 @@ void upwindCcField(Dimension*d,Momentum*mm,BoundaryConditions*bc,
 			if(s1==1){ sign1=1; }
 			else { sign1=-1; }
 		}
-		for(ic=0;ic<=bo1->size;ic++){
+		for(ic=0;ic<bo1->size;ic++){
 			ci1=bo1->st+ic*bo1->iv;
 			if(sign1*uvcc[b1][ci1]>=0){
 				ccdiff[b1][ci1]=sign1*(cc[b1][ci1]-cc[b1][ci1+bo1->in]);
@@ -86,7 +86,7 @@ void upwindCcField(Dimension*d,Momentum*mm,BoundaryConditions*bc,
 			}
 		}
 		sign2=-sign1;
-		for(ic=0;ic<=bo2->size;ic++){
+		for(ic=0;ic<bo2->size;ic++){
 			ci2=bo2->st+ic*bo2->iv;
 			if(sign2*uvcc[b2][ci2]>=0){
 				ccdiff[b2][ci2]=sign2*(cc[b2][ci2]-cc[b2][ci2+bo2->in]);
