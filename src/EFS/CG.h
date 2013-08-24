@@ -1,7 +1,7 @@
-void cg(EFS*efs,double*u,double*rhs){
+void cg(EFS*efs){
 	double d0,dold,dnew,alpha,dnewThreshold;
 	int i=0;
-	subtract(rhs,u,efs->diff,efs->totalEdges);
+	subtract(efs->rhs,efs->u,efs->diff,efs->totalEdges);
 	csrTranspose(efs->C,efs->diff,efs->r,efs->totalNodes);
 	copyVector(efs->r,efs->d,efs->totalNodes);
 	dnew=d0=dotSelf(efs->r,efs->totalNodes);
@@ -11,9 +11,9 @@ void cg(EFS*efs,double*u,double*rhs){
 		csr(efs->C,efs->d,efs->uu,efs->totalEdges);
 		csrTranspose(efs->C,efs->uu,efs->q,efs->totalNodes);
 		alpha=dnew/dot(efs->d,efs->q,efs->totalNodes);
-		addAssign(u,alpha,efs->uu,efs->totalEdges);
+		addAssign(efs->u,alpha,efs->uu,efs->totalEdges);
 		if(i%efs->refresh==0){
-			subtract(rhs,u,efs->diff,efs->totalEdges);
+			subtract(efs->rhs,efs->u,efs->diff,efs->totalEdges);
 			csrTranspose(efs->C,efs->diff,efs->r,efs->totalNodes);
 		} else {
 			addAssign(efs->r,-alpha,efs->q,efs->totalNodes);

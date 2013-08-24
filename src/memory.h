@@ -4,6 +4,7 @@ void mallocEFS(EFS*efs){
 	efs->q=malloc(sizeof(double)*efs->totalNodes);
 	efs->uu=malloc(sizeof(double)*efs->totalEdges);
 	efs->diff=malloc(sizeof(double)*efs->totalEdges);
+	efs->rhs=malloc(sizeof(double)*efs->totalEdges);
 }
 void freeEFS(EFS*efs){
 	free(efs->r);
@@ -11,6 +12,7 @@ void freeEFS(EFS*efs){
 	free(efs->q);
 	free(efs->uu);
 	free(efs->diff);
+	free(efs->rhs);
 }
 void mallocC(CSR*C,int totalEntries){
 	C->ci=malloc(sizeof(int)*totalEntries);

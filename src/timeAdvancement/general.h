@@ -44,27 +44,17 @@ void fillTimeDerivative(State*st,
 	viscosity(p,g,mm,bc,is);
 	invariantTimeDerivative(g,mm,st);
 }
-void fillRhs(Grid*g,Interfaces*is,State*s,Numerics*n,LinearSystem*ls){
+void fillRhs(Dimension*d,State*s,EFS*efs,double dt){
 	//Adds time derivative term to rhs.
-	int b,vi,hi,vd3,hd3,es;
+	int b,vi,hi,es;
 	//Assign to RHS.
-	for(b=0;b<g->totalblocks;b++){
-		vd3=g->vdim[b][3];
-		hd3=g->hdim[b][3];
-		es=g->estart[b];
-		for(vi=0;vi<vd3;vi++){
-			ls->rhs[es+vi]=s->u[b][vi]+n->dt*s->ut[b][vi];
+	for(b=0;b<d->tb;b++){
+		es=d->e0[b];
+		for(vi=0;vi<d->v[b].n;vi++){
+			efs->rhs[es+vi]=s->u[b][vi]+dt*s->ut[b][vi];
 		}
-		for(hi=0;hi<hd3;hi++){
-			ls->rhs[es+vd3+hi]=s->v[b][hi]+n->dt*s->vt[b][hi];
+		for(hi=0;hi<d->h[b].n;hi++){
+			efs->rhs[es+d->v[b].n+hi]=s->v[b][hi]+dt*s->vt[b][hi];
 		}
 	}
-	/*
-	//printf("Last edge counted: %d\nTotal edges: %d\n",es+vd3+hi,g->totaledges);
-	int ip;
-	for(ip=0;ip<is->totalinterfacepoints;ip++){
-		ls->rhs[g->totaledges+ip]=0;
-	}
-	//printf("Last interface row: %d\nTotal rows: %d\n",g->totaledges+ip,ls->crows);
-	*/
 }

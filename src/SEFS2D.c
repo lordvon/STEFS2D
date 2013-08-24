@@ -228,7 +228,7 @@ typedef struct {//RungeKutta
 	State*f;
 } RungeKutta;
 typedef struct {//EFS
-	double*rhs;
+	double*rhs,*u;
 	//Intermediate variables for Conjugate Gradients iterations.
 	double*r,*d,*q;//of dim totalNodes
 	double*uu,*diff;//of dim totalEdges
@@ -335,6 +335,7 @@ int main(void){
 	efs.residualTolerance=n.tol;
 	efs.refresh=50;
 	efs.C=&C;
+	efs.u=st.uvec;
 	mallocEFS(&efs);
 
 	int mode=0;
@@ -348,10 +349,10 @@ int main(void){
 		} else {
 			fillTimeDerivative(&st,&g,&bc,&is,&wd,&mm,&sa,&p,&sw,&n,&d);
 		}
-		fillRhs(&g,&is,&st,&n,&ls);
+		fillRhs(&d,&st,&efs,n.dt);
 
 		//input u,rhs; output new u
-		cg(&efs,st.uvec,ls.rhs);
+		cg(&efs);
 		printf("CG converged to %g in %d iterations.\n",efs.residual,efs.iterations);
 		if(sw.turbmod>0){ advanceSanu(&st,&n,&g); }
 	}
