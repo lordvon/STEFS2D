@@ -49,3 +49,9 @@ void copyVector(double*a,double*b,int length){
 		b[i]=a[i];
 	}
 }
+void initializeVector(double*a,int length,double value){
+	int i;
+	for(i=0;i<length;i++){
+		a[i]=value;
+	}
+}

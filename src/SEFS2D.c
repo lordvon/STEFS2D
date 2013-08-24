@@ -37,7 +37,7 @@ typedef struct {//Property
 } Property;
 typedef struct {//State
 	double **u,**v,**sanu;//the invariant velocity components u and v are actually pointers to appropriate locations in one contiguous vector that is used in the linear system solve.
-	double *uvec;//to be used in the linear system. contains room for all velocity components and interface stitching relations. **u and **v point to locations within this vector.
+	double *uvec;//to be used in the linear system. contains room for all velocity components. **u and **v point to locations within this vector.
 	//Time derivatives
 	double **ut,**vt,**sanut;
 } State;
@@ -228,9 +228,12 @@ typedef struct {//RungeKutta
 	State*f;
 } RungeKutta;
 typedef struct {//EFS
+	double*rhs;
 	//Intermediate variables for Conjugate Gradients iterations.
-	double*r,*d,*q,*uu,*diff,residualTolerance;
-	int totalEdges,totalNodes,maxIterations,refresh;
+	double*r,*d,*q;//of dim totalNodes
+	double*uu,*diff;//of dim totalEdges
+	double residualTolerance,residual;
+	int totalEdges,totalNodes,maxIterations,refresh,iterations;
 	CSR*C;
 } EFS;
 /*
@@ -334,7 +337,7 @@ int main(void){
 	efs.C=&C;
 	mallocEFS(&efs);
 
-	int mode=1;
+	int mode=0;
 	int i;
 	for(i=1;i<=n.end/n.dt;i++){
 		printf("Iteration %d: ",i);
@@ -347,17 +350,15 @@ int main(void){
 		}
 		fillRhs(&g,&is,&st,&n,&ls);
 
-		ctmult(ls.rhs,ls.ctrhs,&g,&is,&ls);
-		efsCG(&ls,&n,&g,&is);
-		if(isnan(ls.residual)){ printf("Simulation diverged.\n"); break; }
-		cmult(ls.s,st.uvec,&g,&is,&ls);
+		//input u,rhs; output new u
+		cg(&efs,st.uvec,ls.rhs);
+		printf("CG converged to %g in %d iterations.\n",efs.residual,efs.iterations);
 		if(sw.turbmod>0){ advanceSanu(&st,&n,&g); }
-		//update(&st,&g,&ls,&bc);
 	}
 
 	writeMultiBlockGrid(&g,"out/grid.xyz");
 	if(i>1){
-		writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls);
+		writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls,&d);
 		writeMultiBlockCustomSolution("out/nutxx.q",&g,mm.nutxx);
 		writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
 		//writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);

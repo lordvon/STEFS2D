@@ -16,7 +16,7 @@ void fillcc(State* s,Momentum* mm,Grid* grid){
 	}
 }
 void fillxx(State* s,Momentum* mm,Grid* g,
-		BoundaryConditions*bc,Interfaces* is){
+		BoundaryConditions*bc,Interfaces* is,Dimension*d){
 	int xd1,xd0,vd0;
 	int i,j,xi,vi,hi,b;
 	for(b=0;b<g->totalblocks;b++){
@@ -39,7 +39,7 @@ void fillxx(State* s,Momentum* mm,Grid* g,
 			}
 		}
 	}
-	fillxxBoundary(s,mm,g,bc,is);
+	fillxxBoundary(s,mm,g,bc,is,d);
 }
 void filluhh(State* s,Grid* g,Momentum* mm,BoundaryConditions*bc,Interfaces* is){
 	int b,i,j,hi,vi;

@@ -1,34 +1,3 @@
-void initTimeDerivative(State*s,Grid* g,Momentum* mm,BoundaryConditions* bc){
-	int b,i,j,os,vi1,vi2,hi1,hi2;
-	int vd0,vd1,hd0,hd3;
-	char bc0,bc1,bc2,bc3;
-	for(b=0;b<g->totalblocks;b++){
-		vd0=g->vdim[b][0];
-		vd1=g->vdim[b][1];
-		hd0=g->hdim[b][0];
-		hd3=g->hdim[b][3];
-		bc0=bc->id[b][0];
-		bc1=bc->id[b][1];
-		bc2=bc->id[b][2];
-		bc3=bc->id[b][3];
-		//vertical boundaries
-		os=vd0-1;
-		for(j=0;j<vd1;j++){
-			vi1=j*vd0;
-			vi2=j*vd0+os;
-			if((bc3=='f') | (bc3=='w')){ s->ut[b][vi1]=0; }
-			if((bc1=='f') | (bc1=='w')){ s->ut[b][vi2]=0; }
-		}
-		//horizontal boundaries
-		os=hd3-hd0;
-		for(i=0;i<hd0;i++){
-			hi1=i;
-			hi2=i+os;
-			if((bc0=='f') | (bc0=='w')){ s->vt[b][hi1]=0; }
-			if((bc2=='f') | (bc2=='w')){ s->vt[b][hi2]=0; }
-		}
-	}
-}
 void invariantZeroGradient(State*st,Grid*g,BoundaryConditions*bc){
 	int b,s,i;
 	Boundary*bo;
@@ -132,16 +101,6 @@ void initState(Grid*g,Momentum*mm,LinearSystem*ls,State*s,Initial*in){
 		for(ci=0;ci<cd3;ci++){
 			s->sanu[b][ci]=in->sanu0;
 		}
-		/*
-		//init turbulence quantities
-		for(ci=0;ci<cd3;ci++){
-			mm->nut[b][ci]=in->nut0;
-		}
-		for(ci=0;ci<cd3;ci++){
-			s->tke[b][ci]=in->tke0;
-			s->tdr[b][ci]=in->tdr0;
-		}
-		*/
 		//discrete streamfunction vector
 		for(i=0;i<ls->ccols;i++){
 			ls->s[i]=0;

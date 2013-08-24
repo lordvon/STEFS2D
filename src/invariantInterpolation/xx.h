@@ -125,10 +125,53 @@ void fillxxBoundaryInterface(State* s,Momentum* mm,Grid* g,Interfaces* is){
 		}
 	}
 }
+int getCornerXi(int block,int corner,Dimension*d){
+	int xi;
+	switch(corner){
+	case 0: xi=0; break;
+	case 1: xi=d->x[block].i-1; break;
+	case 2: xi=d->x[block].n-1; break;
+	case 3: xi=d->x[block].n-d->x[block].i; break;
+	}
+	return xi;
+}
+void invariantCommonCorners(Momentum*mm,
+		BoundaryConditions*bc,Dimension*d,Grid*g){
+	//Common Corners
+	int cc,c,b,xi;
+	//Wall
+	for(cc=0;cc<bc->wcn;cc++){
+		for(c=0;c<4;c++){
+			b=bc->wc[cc].block[c];
+			if(b>=0){
+				xi=getCornerXi(b,c,d);
+				mm->uxx[b][xi]=0;
+				mm->vxx[b][xi]=0;
+			}
+		}
+	}
+	//Fixed
+	double a[2];
+	for(cc=0;cc<bc->fcn;cc++){
+		for(c=0;c<4;c++){
+			b=bc->fc[cc].block[c];
+			if(b>=0){
+				xi=getCornerXi(b,c,d);
+				a[0]=g->a21xx[b][xi];
+				a[1]=g->a22xx[b][xi];
+				mm->uxx[b][xi]=cross(bc->fv[b],a);
+				a[0]=g->a11xx[b][xi];
+				a[1]=g->a12xx[b][xi];
+				mm->vxx[b][xi]=-cross(bc->fv[b],a);
+			}
+		}
+	}
+}
 void fillxxBoundary(State*s,Momentum*mm,Grid*g,
-		BoundaryConditions*bc,Interfaces*is){
+		BoundaryConditions*bc,Interfaces*is,Dimension*d){
 	fillxxBoundaryZeroGradient(s,mm,g,bc);
 	fillxxBoundaryFixed(mm,g,bc);
 	fillxxBoundaryWall(mm,g,bc);
 	fillxxBoundaryInterface(s,mm,g,is);
+	invariantCommonCorners(mm,bc,d,g);
 }
