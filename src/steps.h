@@ -57,11 +57,17 @@ void cartesianDerivatives(Grid* g,Momentum* mm,Interfaces* is){
 	fillDerivativecc(g,mm);
 	fillDerivativexx(g,mm,is);
 }
-void convection(Grid* g,Momentum* mm,BoundaryConditions* bc,Interfaces* is){
-	fillI11(g,mm,bc,is);
+void convectionCentralDifference(Grid* g,Momentum* mm,BoundaryConditions* bc,Interfaces* is){
+	fillI11CentralDifference(g,mm,bc,is);
 	fillI12(g,mm);
 	fillI21(g,mm);
-	fillI22(g,mm,bc,is);
+	fillI22CentralDifference(g,mm,bc,is);
+}
+void convectionUpwindCC(Dimension*d,Grid*g,State*s,Momentum*mm,BoundaryConditions*bc){
+	fillI11UpwindCC(d,g,s,mm,bc);
+	fillI12(g,mm);
+	fillI21(g,mm);
+	fillI22UpwindCC(d,g,s,mm,bc);
 }
 void viscosity(Property*p,Grid* g,Momentum* mm,BoundaryConditions* bc,
 		Interfaces* is){

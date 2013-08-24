@@ -154,3 +154,35 @@ void fillI22InteriorUpwindCC(State*st,Dimension*d,Momentum*mm){
 		}
 	}
 }
+void fillI11UpwindCC(Dimension*d,Grid*g,State*s,Momentum*mm,BoundaryConditions*bc){
+	fillI11InteriorUpwindCC(d,s,mm);
+	fillI11ZeroGradient(g,mm,bc);
+	fillI11InterfaceUpwindCC(d,s,mm,bc);
+	//Fixed and Wall
+	int b,side;
+	char sbc;
+	for(b=0;b<g->totalblocks;b++){
+		for(side=1;side<=3;side+=2){
+			sbc=bc->id[b][side];
+			if((sbc=='f') | (sbc=='w')){
+				fillI11Zero(mm,g,b,side);
+			}
+		}
+	}
+}
+void fillI22UpwindCC(Dimension*d,Grid* g,State*s,Momentum*mm,BoundaryConditions*bc){
+	fillI22InteriorUpwindCC(s,d,mm);
+	fillI22ZeroGradient(g,mm,bc);
+	fillI22InterfaceUpwindCC(d,s,mm,bc);
+	//Fixed and Walls
+	int b,side;
+	char sbc;
+	for(b=0;b<g->totalblocks;b++){
+		for(side=0;side<=2;side+=2){
+			sbc=bc->id[b][side];
+			if((sbc=='f') | (sbc=='w')){
+				fillI22Zero(mm,g,b,side);
+			}
+		}
+	}
+}

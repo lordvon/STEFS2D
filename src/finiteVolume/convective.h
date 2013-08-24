@@ -33,22 +33,6 @@ void fillI11ZeroGradient(Grid*g,Momentum*mm,BoundaryConditions*bc){
 		}
 	}
 }
-void fillI11(Grid* g,Momentum* mm,BoundaryConditions*bc,Interfaces* is){
-	fillI11InteriorCentralDifference(g,mm);
-	fillI11ZeroGradient(g,mm,bc);
-	fillI11InterfaceCentralDifference(g,mm,is);
-	//Fixed and Wall
-	int b,side;
-	char sbc;
-	for(b=0;b<g->totalblocks;b++){
-		for(side=1;side<=3;side+=2){
-			sbc=bc->id[b][side];
-			if((sbc=='f') | (sbc=='w')){
-				fillI11Zero(mm,g,b,side);
-			}
-		}
-	}
-}
 void fillI12(Grid* g,Momentum* mm){
 	int b,xi,vi;
 	int xd0,vd3;
@@ -116,22 +100,6 @@ void fillI22ZeroGradient(Grid*g,Momentum*mm,BoundaryConditions*bc){
 			sbc=bc->id[b][side];
 			if(sbc=='z'){
 				fillI22ZeroGradientSub(mm,g,b,side);
-			}
-		}
-	}
-}
-void fillI22(Grid* g,Momentum* mm,BoundaryConditions*bc,Interfaces* is){
-	fillI22InteriorCentralDifference(g,mm);
-	fillI22ZeroGradient(g,mm,bc);
-	fillI22InterfaceCentralDifference(g,mm,is);
-	//Fixed and Walls
-	int b,side;
-	char sbc;
-	for(b=0;b<g->totalblocks;b++){
-		for(side=0;side<=2;side+=2){
-			sbc=bc->id[b][side];
-			if((sbc=='f') | (sbc=='w')){
-				fillI22Zero(mm,g,b,side);
 			}
 		}
 	}

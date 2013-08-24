@@ -179,7 +179,8 @@ void fillTimeDerivative(State*st,
 	interpolateState(st,mm,g,is,bc,d);
 	cartesianConvert(st,g,mm);
 	cartesianDerivatives(g,mm,is);
-	convection(g,mm,bc,is);
+	//convectionCentralDifference(g,mm,bc,is);
+	convectionUpwindCC(d,g,st,mm,bc);
 	if(sw->turbmod>0){
 		computeSanut(st,sa,p,g,is,mm,d,bc,wd->cc);
 		updateNut(st,sa,g,p,mm,bc,is);
