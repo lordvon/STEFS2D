@@ -74,31 +74,46 @@ void invariantTimeDerivativeUpwindCC(Dimension*d,Grid*g,Momentum*mm,State*s,
 	Boundary*bo;
 	for(w=0;w<bc->wn;w++){
 		side=bc->w[w].s;
+		b=bc->w[w].b;
 		if(side%2==1){
-			b=bc->w[w].b;
 			bo=&d->vside[b].b[side];
 			for(vi=bo->st;vi<=bo->en;vi+=bo->iv){
 				s->ut[b][vi]=0;
+			}
+		} else {
+			bo=&d->hside[b].b[side];
+			for(hi=bo->st;hi<=bo->en;hi+=bo->iv){
+				s->vt[b][hi]=0;
 			}
 		}
 	}
 	for(f=0;f<bc->fn;f++){
 		side=bc->f[f].s;
+		b=bc->f[f].b;
 		if(side%2==1){
-			b=bc->f[f].b;
 			bo=&d->vside[b].b[side];
 			for(vi=bo->st;vi<=bo->en;vi+=bo->iv){
 				s->ut[b][vi]=0;
+			}
+		} else {
+			bo=&d->hside[b].b[side];
+			for(hi=bo->st;hi<=bo->en;hi+=bo->iv){
+				s->vt[b][hi]=0;
 			}
 		}
 	}
 	for(z=0;z<bc->zn;z++){
 		side=bc->z[z].s;
+		b=bc->z[z].b;
 		if(side%2==1){
-			b=bc->z[z].b;
 			bo=&d->vside[b].b[side];
 			for(vi=bo->st;vi<=bo->en;vi+=bo->iv){
 				s->ut[b][vi]=s->ut[b][vi+bo->in];
+			}
+		} else {
+			bo=&d->hside[b].b[side];
+			for(hi=bo->st;hi<=bo->en;hi+=bo->iv){
+				s->vt[b][hi]=s->vt[b][hi+bo->in];
 			}
 		}
 	}

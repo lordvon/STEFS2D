@@ -363,7 +363,7 @@ int main(void){
 	if(i>1){
 		writeMultiBlockStateSolution("out/solution.q",&g,&st,&mm,&is,&bc,&ls,&d);
 		writeMultiBlockCustomSolution("out/nutxx.q",&g,mm.nutxx);
-		writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
+		//writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
 		//writeMultiBlockCustomSolution("out/uxx.q",&g,mm.uxx);
 		//writeMultiBlockCustomSolution("out/vxx.q",&g,mm.vxx);
 	}
@@ -470,6 +470,6 @@ int main(void){
 
 	freeAll(&st,&n,&sw,&g,&in,&is,&ls,&mm,&bc,&sl,&sa,&wd,&rk,&d,&C,&efs);
 
-	printf("Finished!");
+	printf("Finished!\n");
 	return EXIT_SUCCESS;
 }
